@@ -31,10 +31,10 @@ final class Arrayparam extends Generic
      */
     public function __construct($kind, $object = null, $faker = null)
     {
-        $prefix = 'arr|';
+        $prefix = 'arrayparam|';
         // drop $prefix from the start of kind...
         if (strpos($kind, $prefix) !== 0) {
-            throw new Exception('Unable to process the arr generator attribute as it does not start with '.$prefix);
+            throw new \Exception('Unable to process the arr generator attribute as it does not start with '.$prefix);
         }
 
         $kind = substr($kind, strlen($prefix));
