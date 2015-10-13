@@ -18,7 +18,7 @@ use InvalidArgumentException;
  * @author  Graham Campbell <graham@mineuk.com>
  * @license <https://github.com/thephpleague/factory-muffin/blob/master/LICENSE> MIT
  */
-final class Arr extends Generic
+final class Arrayparam extends Generic
 {
     /**
      * Initialise our Generator.

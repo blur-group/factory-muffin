@@ -27,7 +27,7 @@ abstract class Base
     private static $generators = array(
         'call',
         'closure',
-        'arr',
+        'arrayparam',
         'factory',
     );
 
