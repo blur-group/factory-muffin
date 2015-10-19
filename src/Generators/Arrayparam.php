@@ -20,6 +20,10 @@ use InvalidArgumentException;
  */
 final class Arrayparam extends Generic
 {
+
+    /** @var delimiter */
+    private $delimiter;
+
     /**
      * Initialise our Generator.
      *
@@ -37,7 +41,13 @@ final class Arrayparam extends Generic
             throw new \Exception('Unable to process the arr generator attribute as it does not start with '.$prefix);
         }
 
+        // TODO add error checking
+        // test following rule applies to array?
+
         $kind = substr($kind, strlen($prefix));
+        $segments = explode('|',$kind);
+        $this->delimiter = array_shift($segments);
+        $kind = implode('|',$segments);
         parent::__construct($kind, $object, $faker);
     }
 
@@ -52,14 +62,12 @@ final class Arrayparam extends Generic
         $options = explode('|', $this->kind);
         array_shift($options);
 
-        $delimiter = array_shift($options);
-
         if (count($options) > 0) {
             $options = explode(';', $options[0]);
             $newOptions = [];
             foreach ($options as $option) {
-                if (isset($delimiter) && strpos($option, $delimiter) !== FALSE) {
-                    $newOptions[] = explode($delimiter, $option);
+                if (isset($this->delimiter) && strpos($option, $this->delimiter) !== FALSE) {
+                    $newOptions[] = explode($this->delimiter, $option);
                 } else {
                     $newOptions[] = $option;
                 }
