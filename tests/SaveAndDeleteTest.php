@@ -185,11 +185,11 @@ class SaveAndDeleteTest extends AbstractTestCase
         } catch (DeletingFailedException $e) {
             $exceptions = $e->getExceptions();
             $this->assertSame("We encountered 2 problem(s) while trying to delete the saved models.", $e->getMessage());
-            $this->assertSame("OH NOES!", $exceptions[0]->getMessage());
-            $this->assertSame("The delete method 'delete' was not found on the model of type: '$model'.", $exceptions[1]->getMessage());
-            $this->assertSame($model, $exceptions[1]->getModel());
-            $this->assertSame('delete', $exceptions[1]->getMethod());
-            $this->assertInstanceOf($model, $exceptions[1]->getObject());
+            $this->assertSame("OH NOES!", $exceptions[1]->getMessage());
+            $this->assertSame("The delete method 'delete' was not found on the model of type: '$model'.", $exceptions[0]->getMessage());
+            $this->assertSame($model, $exceptions[0]->getModel());
+            $this->assertSame('delete', $exceptions[0]->getMethod());
+            $this->assertInstanceOf($model, $exceptions[0]->getObject());
             $this->assertInternalType('array', $e->getExceptions());
             $this->assertCount(2, $e->getExceptions());
             throw $e;
