@@ -3,6 +3,7 @@
 namespace League\FactoryMuffin;
 
 use Closure;
+use Doctrine\Common\EventManager;
 use Exception;
 use Faker\Factory as Faker;
 use League\FactoryMuffin\Exceptions\DeleteFailedException;
@@ -264,6 +265,14 @@ class Factory
 
         return $object;
     }
+
+    public function trackEntities()
+    {
+        $evm = new EventManager();
+
+        $tracker = new EntityPersistSubscriber($evm);
+    }
+
 
     /**
      * Save the object to the database.
