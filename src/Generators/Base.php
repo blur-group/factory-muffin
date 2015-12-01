@@ -83,6 +83,10 @@ abstract class Base
             return new Closure($kind, $object, $faker);
         }
 
+        if ( ! is_string($kind)) {
+            return new Passthrough($kind, $object, $faker);
+        }
+
         $class = __NAMESPACE__.'\\Generic';
         foreach (self::$generators as $generator) {
             if (substr($kind, 0, strlen($generator)) === $generator) {
