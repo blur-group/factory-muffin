@@ -3,7 +3,8 @@
 namespace League\FactoryMuffin;
 
 use Closure;
-use Doctrine\Common\EventManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Events;
 use Exception;
 use Faker\Factory as Faker;
 use League\FactoryMuffin\Exceptions\DeleteFailedException;
@@ -266,13 +267,17 @@ class Factory
         return $object;
     }
 
-    public function trackEntities()
+    /**
+     * Adds doctrine event listener to track persisted entities.
+     *
+     * @param EntityManager $em
+     */
+    public function trackEntities(EntityManager $em)
     {
-        $evm = new EventManager();
+        $evm = $em->getEventManager();
 
-        $tracker = new EntityPersistSubscriber($evm);
+        $evm->addEventListener([Events::postPersist], new EntityPersistSubscriber());
     }
-
 
     /**
      * Save the object to the database.
@@ -704,5 +709,15 @@ class Factory
         foreach ($files as $file) {
             include $file->getPathName();
         }
+    }
+
+    /**
+     * Adds object to saved entities list.
+     *
+     * @param $object
+     */
+    public function saveForTracking($object)
+    {
+        return Arr::add($this->saved, $object);
     }
 }
