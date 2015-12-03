@@ -3,8 +3,6 @@
 namespace League\FactoryMuffin;
 
 use Closure;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Events;
 use Exception;
 use Faker\Factory as Faker;
 use League\FactoryMuffin\Exceptions\DeleteFailedException;
@@ -265,18 +263,6 @@ class Factory
         }
 
         return $object;
-    }
-
-    /**
-     * Adds doctrine event listener to track persisted entities.
-     *
-     * @param EntityManager $em
-     */
-    public function trackEntities(EntityManager $em)
-    {
-        $evm = $em->getEventManager();
-
-        $evm->addEventListener([Events::postPersist], new EntityPersistSubscriber());
     }
 
     /**
